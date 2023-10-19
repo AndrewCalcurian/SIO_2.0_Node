@@ -1,6 +1,10 @@
 import {Schema, model} from 'mongoose';
 
 const grupoSchema = new Schema({
+    borrado:{
+        type:Boolean,
+        default:false,
+    },
     nombre:{
         type:String
     },
