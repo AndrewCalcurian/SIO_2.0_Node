@@ -1,4 +1,5 @@
 import Grupo from './models/grupo';
+import Fabricante from './models/fabricante'
 export default (io) => {
 
     io.on('connection', (socket) =>{  
@@ -46,5 +47,25 @@ export default (io) => {
             io.emit('cargarGrupos', Grupos)
         });
 
+        // *********************
+        // * BUSCAR FABRICANTE *
+        // *********************
+        const emitirFabricantes = async () =>{
+            const fabricantes = await Fabricante.find({borrado:false})
+            io.emit('SERVER:Fabricantes', fabricantes)
+        }
+
+        socket.on('CLIENTE:BuscarFabricante', async () =>{
+            await emitirFabricantes()
+        })
+
+        // ********************
+        // * NUEVO FABRICANTE *
+        // ********************
+        socket.on('CLIENTE:NuevoFabricante', async(data) =>{
+            const NuevoFabricante = new Fabricante(data);
+            const NuevoFabricante_ = await NuevoFabricante.save()
+            emitirFabricantes()
+        })
     });
 };

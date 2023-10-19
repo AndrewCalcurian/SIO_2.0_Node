@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let FabricanteSchema = new Schema([{
+    borrado:{
+        type:Boolean,
+        default:false,
+    },
     nombre:{
         type:String,
         required:true
@@ -11,12 +15,14 @@ let FabricanteSchema = new Schema([{
         type:String,
         required:true
     },
-    origenes:{
-        type:Array,
-    },
-    grupo:{
-        type:Array,
-    },
+    origenes:[{
+        pais:{type:String},
+        estado:{type:String}
+    }],
+    grupo:[{
+        type:Schema.Types.ObjectId,
+        ref: 'Grupo'
+    }],
 
 }])
 
