@@ -51,7 +51,7 @@ export default (io) => {
         // * BUSCAR FABRICANTE *
         // *********************
         const emitirFabricantes = async () =>{
-            const fabricantes = await Fabricante.find({borrado:false})
+            const fabricantes = await Fabricante.find({borrado:false}).populate({path:'grupo'}).exec()
             io.emit('SERVER:Fabricantes', fabricantes)
         }
 
@@ -67,5 +67,24 @@ export default (io) => {
             const NuevoFabricante_ = await NuevoFabricante.save()
             emitirFabricantes()
         })
+        
+        // *********************
+        // * EDITAR FABRICANTE *
+        // *********************
+        socket.on('CLIENTE:EditarFabricante', async (data) => {
+
+            let grupo = []
+            for(let i=0;i<data.grupo.length;i++){
+                grupo.push(data.grupo[i]._id)
+
+                if(i === data.grupo.length -1){
+                    data.grupo = grupo
+                    await Fabricante.updateOne({_id:data._id}, data)
+                    emitirFabricantes()
+                }
+            }
+        });
+
+
     });
 };
