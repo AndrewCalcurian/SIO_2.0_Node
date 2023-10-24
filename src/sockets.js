@@ -1,5 +1,6 @@
 import Grupo from './models/grupo';
 import Fabricante from './models/fabricante'
+import Proveedor from './models/proveedor'
 export default (io) => {
 
     io.on('connection', (socket) =>{  
@@ -14,7 +15,6 @@ export default (io) => {
         // * BUSCAR GRUPO *
         // ****************
         socket.on('CLIENTE:buscarGrupos', async () =>{
-            console.log('se busco grupos')
             const Grupos = await Grupo.find({borrado:false})
             io.emit('cargarGrupos', Grupos)
         })
@@ -63,6 +63,7 @@ export default (io) => {
         // * NUEVO FABRICANTE *
         // ********************
         socket.on('CLIENTE:NuevoFabricante', async(data) =>{
+            delete data._id;
             const NuevoFabricante = new Fabricante(data);
             const NuevoFabricante_ = await NuevoFabricante.save()
             emitirFabricantes()
@@ -84,7 +85,34 @@ export default (io) => {
                 }
             }
         });
+        // ***********************
+        // * ELIMINAR FABRICANTE *
+        // ***********************
+        socket.on('CLIENTE:deleteFabricante', async (id) => {
+            await Fabricante.updateOne({_id:id}, {borrado:true})
+            emitirFabricantes()
+        });
+        // ********************
+        // * BUSCAR PROVEEDOR *
+        // * ******************
+        const emitirProveedores = async () =>{
+            const fabricantes = await Fabricante.find({borrado:false}).populate({path:'grupo'}).exec()
+            io.emit('SERVER:proveedores', fabricantes)
+        }
 
+        socket.on('CLIENTE:BuscarProveedores', async () =>{
+            await emitirProveedores()
+        })
+        // *******************
+        // * NUEVO PROVEEDOR *
+        // *******************
+        socket.on('CLIENTE:NuevoProveedor', async(data) =>{
+            console.log('aqui')
+            const NuevoProveedor = new Proveedor(data);
+            const NuevoProveedor_ = await NuevoProveedor.save()
+            console.log(NuevoProveedor_)
+            emitirProveedores()
+        })
 
     });
 };
