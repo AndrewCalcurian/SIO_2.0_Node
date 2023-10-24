@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let ProveedorSchema = new Schema([{
+    borrado:{
+        type:Boolean,
+        default:false,
+    },
     nombre:{
         type:String,
         required:true
@@ -13,15 +17,12 @@ let ProveedorSchema = new Schema([{
     rif:{
         type:String,
     },
-    grupo:{
-
-        type:Array,
-    },
     contactos:{
         type:Array,
     },
     fabricantes:{
-        type:Array,
+        type:Schema.Types.ObjectId,
+        ref: 'fabricante'
     }
 
 }])
