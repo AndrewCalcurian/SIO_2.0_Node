@@ -31,15 +31,25 @@ module.exports = (io) => {
         // * NUEVO GRUPO *
         // ***************
         socket.on('CLIENTE:NuevoGrupo', async (data) => {
-            const NuevaNota = new Grupo(data);
-            const nuevaNota_ = await NuevaNota.save()
-                .then(()=>{
-                    console.log('Se creo un nuevo grupo')
-                }).catch((err)=>{
-                    console.error('hubo un error en la creación del grupo:', err)
-                })
-                emitGrupos()
-        });
+            // Verificar si el grupo ya existe en la base de datos
+            const grupoExistente = await Grupo.findOne({ nombre: data.nombre, borrado:false });
+            if (grupoExistente) {
+              console.log('Este grupo ya se encuentra registrado');
+              socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Este grupo ya se encuentra registrado',icon:'info' });
+            } else {
+              // Crear una nueva instancia de Grupo
+              const NuevaNota = new Grupo(data);
+              try {
+                await NuevaNota.save();
+                console.log('Se creó un nuevo grupo');
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se creó un nuevo grupo', icon:'success' });
+                emitGrupos();
+              } catch (err) {
+                console.error('Hubo un error en la creación del grupo:', err);
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en la creación del grupo', icon:'error' });
+              }
+            }
+          });
 
         // ******************
         // * Eliminar GRUPO *
@@ -48,8 +58,10 @@ module.exports = (io) => {
             await Grupo.updateOne({_id:id}, {borrado:true})
                 .then(()=>{
                     console.log('Se eliminó un grupo')
+                    socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se eliminó el grupo', icon:'success' });
                 }).catch((err)=>{
                     console.error('Hubo un error en la eliminación del grupo:', err)
+                    socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en la eliminación del grupo', icon:'error' });
                 })
             emitGrupos()
         });
@@ -61,8 +73,10 @@ module.exports = (io) => {
             try{
                 await Grupo.findByIdAndUpdate(data.id, data)
                 console.log('Se editó un grupo')
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se editó el grupo', icon:'success' });
             } catch(err) {
                 console.error('Error al editar grupo: ', err)
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en la edición del grupo', icon:'error' });
             }
             
             emitGrupos()
