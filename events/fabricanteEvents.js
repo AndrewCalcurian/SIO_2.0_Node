@@ -71,10 +71,7 @@ module.exports = (io)=>{
             }catch(err) {
                 console.error('Ha ocurrido un error al elminar al fabricante')
                 socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Ha ocurrido un error al elminar al fabricante', icon: 'error' });
-
             }
-
-
         });
     })
 }

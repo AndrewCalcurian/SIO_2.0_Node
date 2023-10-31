@@ -51,7 +51,7 @@ module.exports = (io) => {
         socket.on('CLIENTE:EditarProveedor', async(data) =>{
             try{
                 const {_id, ...ProveedorData} = data;
-                await Proveedor.updateOneById(_id, ProveedorData)
+                await Proveedor.updateOne({_id:_id}, ProveedorData)
                 socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se editó fabricante', icon: 'success' });
                 emitirProveedores();
             }catch(err){
