@@ -7,6 +7,10 @@ let FabricanteSchema = new Schema([{
         type:Boolean,
         default:false,
     },
+    proveedor:{
+        type:Boolean,
+        default:false
+    },
     nombre:{
         type:String,
         required:true

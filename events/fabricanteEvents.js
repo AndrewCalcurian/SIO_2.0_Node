@@ -26,17 +26,26 @@ module.exports = (io)=>{
         socket.on('CLIENTE:NuevoFabricante', async (data) => {
             try {
               const { _id, ...fabricanteData } = data;
-          
+              
+              // Check if 'nombre', 'alias', or 'grupo' is missing in fabricanteData
+              if (!fabricanteData.nombre || !fabricanteData.alias || !fabricanteData.grupo || !fabricanteData.origenes) {
+                console.log('Faltan datos requeridos del fabricante');
+                // Emit an error message to the client
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Faltan datos requeridos del fabricante', icon: 'warning' });
+                return;
+              }
+              
               // Check if the fabricanteData.nombre already exists
-              const fabricanteExistente = await Fabricante.findOne({ nombre: fabricanteData.nombre, borrado:false });
+              const fabricanteExistente = await Fabricante.findOne({ nombre: fabricanteData.nombre, borrado: false });
               if (fabricanteExistente) {
                 console.log('Este fabricante ya existe');
                 // Emit an error message to the client
                 socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Este fabricante ya existe', icon: 'error' });
                 return;
               }
-          
+              
               const nuevoFabricante = await Fabricante.create(fabricanteData);
+              console.log('Se creó un nuevo fabricante');
               socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se creó un nuevo fabricante', icon: 'success' });
               emitirFabricantes();
             } catch (error) {

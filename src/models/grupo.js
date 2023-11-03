@@ -6,13 +6,19 @@ const grupoSchema = new Schema({
         default:false,
     },
     nombre:{
-        type:String
+        type:String,
+        required:true
     },
     parcial:{
-        type:Boolean
+        type:Boolean,
+        required:true
     },
     icono:{
         type:String,
+    },
+    trato:{
+        type:Boolean,
+        default:false
     },
 },{
     timestamps:true

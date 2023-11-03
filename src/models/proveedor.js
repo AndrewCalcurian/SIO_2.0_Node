@@ -13,17 +13,20 @@ let ProveedorSchema = new Schema([{
     },
     direccion:{
         type:String,
+        required:true
     },
     rif:{
         type:String,
+        required:true
     },
     contactos:{
         type:Array,
+        required:true
     },
-    fabricantes:{
+    fabricantes:[{
         type:Schema.Types.ObjectId,
         ref: 'fabricante'
-    }
+    }]
 
 }])
 
