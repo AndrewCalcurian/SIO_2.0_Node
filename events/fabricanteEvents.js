@@ -6,7 +6,6 @@ module.exports = (io)=>{
             try {
                 const Fabricantes = await Fabricante.find({borrado:false}).populate('grupo').exec()
                 io.emit('SERVER:Fabricantes', Fabricantes)
-                console.log('Se realizó la consulta de los fabricantes')
             } catch (error) {
                 console.error('Error al buscar fabricantes:', error)
             }
