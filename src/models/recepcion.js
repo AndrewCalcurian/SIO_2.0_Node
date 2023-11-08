@@ -15,28 +15,29 @@ let RecepcionSchema = new Schema([{
         type:String,
         required:[true, 'Debes indicar una orden de compra']
     },
-    cantidad:{
+    cantidad:[{
         type:String,
         required:[true, 'Debe indicar una cantidad total recepcionada']
-    },
+    }],
     documento:{
         type:String,
         required:[true, 'Debes ingresar un documento']
     },
-    fabricacion:{
+    fabricacion:[{
         type:String,
-        required:[true, 'Debes indicar una fecha de fabricación']
-    },
-    materiales:[{
+    }],
+    materiales:[[{
+        codigo:{type:Number},
         presentacion:{type:String},
         neto:{type:String},
         lote:{type:String},
         unidad:{type:String},
+        fabricacion:{type:String},
         material:{
             type:Schema.Types.ObjectId,
             ref: 'material'
         },
-    }],
+    }]],
     proveedor:{
         type:Schema.Types.ObjectId,
         ref: 'proveedor'

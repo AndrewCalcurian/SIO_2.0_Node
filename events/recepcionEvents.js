@@ -32,7 +32,6 @@ module.exports = (io)=>{
         socket.on('CLIENTE:NuevaRecepcion', async (data) => {
                         
               // Verificar si los datos requeridos están completos
-              
                 const NuevaRecepcion = new Recepcion(data);
                 try {
                   await NuevaRecepcion.save();
