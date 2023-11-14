@@ -49,7 +49,14 @@ let RecepcionSchema = new Schema([{
     transportista:{
         type:String,
         required:[true, 'Debes ingresar un transportista']
-    }
+    },
+    condicion:[{
+        Certificado_de_calidad:{type:Boolean},
+        Identificacion_del_lote:{type:Boolean},
+        Cajas_en_buen_estado:{type:Boolean},
+        Cajas_limpias:{type:Boolean},
+        Envases_cerrado_hermeticamente:{type:Boolean}
+    }],
 
 }])
 
