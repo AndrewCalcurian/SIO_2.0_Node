@@ -3,6 +3,7 @@ import proveedorEvents  from '../events/proveedorEvents'
 import fabricanteEvents  from '../events/fabricanteEvents'
 import materialEvents from '../events/materialEvents'
 import recepcionEvents from '../events/recepcionEvents'
+import especificacionEvents from '../events/especificacionEvents';
 
 export default function configureEvents(io) {
     grupoEvents(io);
@@ -10,4 +11,5 @@ export default function configureEvents(io) {
     fabricanteEvents(io)
     materialEvents(io)
     recepcionEvents(io)
+    especificacionEvents(io)
 }

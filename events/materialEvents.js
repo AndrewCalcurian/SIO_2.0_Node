@@ -9,7 +9,7 @@ module.exports = (io) => {
     // *******************
     const EmitirMateriales = async () => {
       try {
-        const materials = await Material.find({ borrado: false }).populate('fabricante');
+        const materials = await Material.find({ borrado: false }).populate('fabricante').populate('especificacion');
         io.emit('SERVER:Materiales', materials);
       } catch (error) {
         console.error('Error occurred while fetching materials:', error);

@@ -36,6 +36,10 @@ let MaterialSchema = new Schema([{
     serie:{
         type:String,
     },
+    especificacion:{
+        type:Schema.Types.ObjectId,
+        ref: 'especificacion'
+    }
 
 }])
 
