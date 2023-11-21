@@ -4,7 +4,9 @@ module.exports = (io)=>{
     io.on('connection', (socket) => {
         const emitirFabricantes = async () =>{
             try {
-                const Fabricantes = await Fabricante.find({borrado:false}).populate('grupo').exec()
+                const Fabricantes = await Fabricante.find({borrado:false})
+                                                    .populate('grupo')
+                                                    .exec()
                 io.emit('SERVER:Fabricantes', Fabricantes)
             } catch (error) {
                 console.error('Error al buscar fabricantes:', error)

@@ -24,4 +24,4 @@ const grupoSchema = new Schema({
     timestamps:true
 })
 
-export default model('Grupo', grupoSchema)
+export default model('grupo', grupoSchema)

@@ -25,7 +25,7 @@ let MaterialSchema = new Schema([{
     },
     grupo:{
         type:Schema.Types.ObjectId,
-        ref: 'Grupo'
+        ref: 'grupo'
     },
     nombre:{
         type:String,

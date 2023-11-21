@@ -4,6 +4,7 @@ import fabricanteEvents  from '../events/fabricanteEvents'
 import materialEvents from '../events/materialEvents'
 import recepcionEvents from '../events/recepcionEvents'
 import especificacionEvents from '../events/especificacionEvents';
+import almacenEvents from '../events/almacenEvents';
 
 export default function configureEvents(io) {
     grupoEvents(io);
@@ -12,4 +13,5 @@ export default function configureEvents(io) {
     materialEvents(io)
     recepcionEvents(io)
     especificacionEvents(io)
+    almacenEvents(io)
 }

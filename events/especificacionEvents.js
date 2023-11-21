@@ -37,7 +37,7 @@ module.exports = (io) => {
     //Edicion de especificacion
     socket.on('CLIENTE:EdicionEspecificacion', async (data) => {
       try {
-        especificacion.findByIdAndUpdate(data._id, data);
+        await especificacion.findByIdAndUpdate(data._id, data);
         console.log('Se edito la especificacion');
       } catch (err) {
         console.error('Ha ocurrido un error en la edicion de la especificacion', err)

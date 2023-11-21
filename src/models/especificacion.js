@@ -31,7 +31,51 @@ let EspecificacionSchema = new Schema([{
         min:{type:Number},
         max:{type:Number},
         con:{type:String}
-      }
+      },
+      gramaje: {
+        min: {type:Number},
+        nom: {type:Number},
+        max: {type:Number},
+      },
+      calibre: {
+        pt: {
+          min: {type:Number},
+          nom: {type:Number},
+          max: {type:Number},
+        },
+        um: {
+          min: {type:Number},
+          nom: {type:Number},
+          max: {type:Number},
+        },
+        mm: {
+          min: {type:Number},
+          nom: {type:Number},
+          max: {type:Number},
+        },
+      },
+      cobb: {
+        top: {
+          min: {type:Number},
+          nom: {type:Number},
+          max: {type:Number},
+        },
+        back: {
+          min: {type:Number},
+          nom: {type:Number},
+          max: {type:Number},
+        },
+      },
+      curling: {
+        min: {type:Number},
+        nom: {type:Number},
+        max: {type:Number},
+      },
+      blancura: {
+        min: {type:Number},
+        nom: {type:Number},
+        max: {type:Number},
+      },
 }])
 
 module.exports = mongoose.model('especificacion', EspecificacionSchema)

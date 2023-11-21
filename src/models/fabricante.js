@@ -25,7 +25,7 @@ let FabricanteSchema = new Schema([{
     }],
     grupo:[{
         type:Schema.Types.ObjectId,
-        ref: 'Grupo'
+        ref: 'grupo'
     }],
 
 }])
