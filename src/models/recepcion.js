@@ -33,6 +33,8 @@ let RecepcionSchema = new Schema([{
         lote:{type:String},
         unidad:{type:String},
         fabricacion:{type:String},
+        ancho:{type:Number},
+        largo:{type:Number},
         material:{
             type:Schema.Types.ObjectId,
             ref: 'material'

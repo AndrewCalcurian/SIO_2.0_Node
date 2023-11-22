@@ -17,6 +17,12 @@ let AlmacenSchema = new Schema([{
     lote:{
         type:String
     },
+    ancho:{
+        type:String
+    },
+    largo:{
+        type:String
+    },
     material:{
         type:Schema.Types.ObjectId,
         ref: 'material'
