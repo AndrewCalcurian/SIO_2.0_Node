@@ -5,6 +5,7 @@ import materialEvents from '../events/materialEvents'
 import recepcionEvents from '../events/recepcionEvents'
 import especificacionEvents from '../events/especificacionEvents';
 import almacenEvents from '../events/almacenEvents';
+import analisisEvents from '../events/analisisEvents';
 
 export default function configureEvents(io) {
     grupoEvents(io);
@@ -14,4 +15,5 @@ export default function configureEvents(io) {
     recepcionEvents(io)
     especificacionEvents(io)
     almacenEvents(io)
+    analisisEvents(io)
 }

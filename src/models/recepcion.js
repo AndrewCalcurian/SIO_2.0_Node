@@ -27,6 +27,7 @@ let RecepcionSchema = new Schema([{
         type:String,
     }],
     materiales:[[{
+        analisis:{type:String},
         codigo:{type:Number},
         presentacion:{type:String},
         neto:{type:String},

@@ -11,6 +11,7 @@ app.use(cors())
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use(require('./routes/index.routes.js'))
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

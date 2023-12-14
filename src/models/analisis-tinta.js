@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const analisisSchema = new mongoose.Schema({
+  img:{type:String,
+        default:'no-image'},
   cualitativo: {
     tono: Boolean,
     opacidad: Boolean,
@@ -119,6 +121,19 @@ const analisisSchema = new mongoose.Schema({
       l: String,
       a: String,
       b: String
+    }
+  },
+  resultado:{
+    estandar:String,
+    resultado:String,
+    observacion:String,
+    guardado:{
+      usuario:String,
+      fecha:String
+    },
+    validado:{
+      usuario:String,
+      fecha:String
     }
   }
 });
