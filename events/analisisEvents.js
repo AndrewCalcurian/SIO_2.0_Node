@@ -1,4 +1,5 @@
 import AnalisisTinta from "../src/models/analisis-tinta";
+import AnalisisSustrato from "../src/models/analisis-sustrato"
 import recepcion from "../src/models/recepcion";
 import Recepcion from "../src/models/recepcion";
 module.exports = (io) => {
@@ -22,7 +23,6 @@ module.exports = (io) => {
         })
 
         socket.on('CLIENTE:AnalisisTinta', async (data) => {
-            console.log(data.index)
             // Verificar si los datos requeridos están completos
             const NuevoAnalisis = new AnalisisTinta(data.data);
             const doc = await AnalisisTinta.findOne({ _id: data.data._id });
@@ -54,5 +54,55 @@ module.exports = (io) => {
             }
             EmitirAnalisisTinta();
           });
+
+          const EmitirAnalisisSustrato = async() => {
+            try{
+                const AnalisisSustrato_ = await AnalisisSustrato.find().exec()
+                io.emit('SERVER:AnalisisSustrato', AnalisisSustrato_)
+            }catch(err){
+                console.error('Error al buscar analisis:', err)
+            }
+        }
+
+        socket.on('CLIENTE:BuscarAnalisisSustrato', async()=>{
+            try {
+                await EmitirAnalisisSustrato()
+              } catch (err) {
+                console.error('No se pudo realizar la busqueda del analisis', err)
+              }
+        })
+
+        socket.on('CLIENTE:AnalisisSustrato', async (data) => {
+          // Verificar si los datos requeridos están completos
+          const NuevoAnalisis = new AnalisisSustrato(data.data);
+          const doc = await AnalisisSustrato.findOne({ _id: data.data._id });
+          if (doc) {
+              try{
+
+                  await AnalisisSustrato.findByIdAndUpdate(data.data._id, data.data);
+                  console.log('Se actualizo nuevo analisis de Sustrato');
+                  socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se actualizo analisis', icon: 'success' });
+                  EmitirAnalisisSustrato()
+                  return;  
+              }catch(err){
+                  console.log('Error en actualizacion de analisis');
+                  return
+              }
+          }
+          try {
+            await NuevoAnalisis.save();
+            const reception = await recepcion.findOne({ _id: data.recepcion._id });
+            reception.materiales[data.index].forEach((material) => {
+              material.analisis = NuevoAnalisis._id;
+            });
+            await reception.save();
+            console.log('Se realizó nuevo analisis de Sustrato');
+            socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se realizó nuevo analisis', icon: 'success' });
+          } catch (err) {
+            console.error('Hubo un error en el registro del analisis:', err);
+            socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en el registro del analisis', icon: 'error' });
+          }
+          EmitirAnalisisSustrato()
+        });
     })  
 }
