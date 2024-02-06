@@ -6,6 +6,7 @@ import recepcionEvents from '../events/recepcionEvents'
 import especificacionEvents from '../events/especificacionEvents';
 import almacenEvents from '../events/almacenEvents';
 import analisisEvents from '../events/analisisEvents';
+import fasesEvents from '../events/fasesEvents';
 
 export default function configureEvents(io) {
     grupoEvents(io);
@@ -16,4 +17,5 @@ export default function configureEvents(io) {
     especificacionEvents(io)
     almacenEvents(io)
     analisisEvents(io)
+    fasesEvents(io)
 }
