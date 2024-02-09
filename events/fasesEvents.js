@@ -63,5 +63,20 @@ module.exports = (io) => {
               emitirFases();
             }
           });
+
+        // ******************
+        // * Eliminar FASE *
+        // ******************
+        socket.on('CLIENTE:deleteFase', async (id) => {
+          await fase.updateOne({_id:id}, {borrado:true})
+              .then(()=>{
+                  console.log('Se eliminó una fase')
+                  socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se eliminó la fase', icon:'success' });
+              }).catch((err)=>{
+                  console.error('Hubo un error en la eliminación de la fase:', err)
+                  socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en la eliminación de la fase', icon:'error' });
+              })
+            emitirFases();
+      });
     })
 }
