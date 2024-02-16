@@ -18,10 +18,12 @@ let AlmacenSchema = new Schema([{
         type:String
     },
     ancho:{
-        type:String
+        type:String,
+        default:'0'
     },
     largo:{
-        type:String
+        type:String,
+        default:0
     },
     material:{
         type:Schema.Types.ObjectId,

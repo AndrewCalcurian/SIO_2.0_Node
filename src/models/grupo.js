@@ -20,6 +20,10 @@ const grupoSchema = new Schema({
         type:Boolean,
         default:false
     },
+    otro:{
+        type:Boolean,
+        default:false
+    }
 },{
     timestamps:true
 })

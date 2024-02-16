@@ -44,6 +44,24 @@ module.exports = (io) => {
               }
             }
           });
+        
+          //   EDITAR FASE
+        socket.on('CLIENTE:EditCliente', async (data) => {
+            if (!data.nombre) {
+              console.log('Falta el nombre de la fase para editar');
+              socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Falta el nombre de la fase para editar', icon: 'warning' });
+            } else {
+              try {
+                await cliente.findByIdAndUpdate(data._id, data);
+                console.log('Se editó el cliente');
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se editó el cliente', icon: 'success' });
+              } catch (err) {
+                console.error('Error al editar cliente: ', err);
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en la edición del cliente', icon: 'error' });
+              }
+              emitirClientes();
+            }
+          });
 
     })
 }
