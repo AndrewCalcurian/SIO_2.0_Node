@@ -1,5 +1,6 @@
-import especificacion from "../src/models/especificacion"
 import Material from "../src/models/material"
+import especificacion from "../src/models/especificacion"
+import prueba from "../src/models/analisis"
 
 module.exports = (io) => {
   io.on('connection', (socket) => {
@@ -44,5 +45,22 @@ module.exports = (io) => {
       }
       await emitirEspecificaciones()
     })
+    //Nueva especificacion
+    socket.on('CLIENTE:nuevaEspecificacion2', async (data) => {
+  try {
+    const especificacion = data.especificacion
+    console.log(data)
+  const nuevaEspecificacion = new prueba({ especificacion });
+    await nuevaEspecificacion.save();
+    console.log('Se creó una nueva especificación');
+    const Mat = await Material.findByIdAndUpdate(data.material, { especificacion: nuevaEspecificacion._id });
+    console.log('Se actualizó el material');
+    const materials = await Material.find({ borrado: false }).populate('fabricante').populate('especificacion');
+    socket.emit('SERVER:Materiales', materials);
+  } catch (err) {
+    console.error('Ha ocurrido un error en la creación de la especificación', err);
+  }
+  await emitirEspecificaciones();
+});
   })
 }
