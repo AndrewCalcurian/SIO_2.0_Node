@@ -28,6 +28,8 @@ let ProveedorSchema = new Schema([{
         ref: 'fabricante'
     }]
 
-}])
+}],{
+    timestamps:true
+  })
 
 module.exports = mongoose.model('proveedor', ProveedorSchema)

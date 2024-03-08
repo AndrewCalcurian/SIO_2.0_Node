@@ -61,6 +61,8 @@ let RecepcionSchema = new Schema([{
         Envases_cerrado_hermeticamente:{type:Boolean}
     }],
 
-}])
+}],{
+    timestamps:true
+  })
 
 module.exports = mongoose.model('recepcion', RecepcionSchema)

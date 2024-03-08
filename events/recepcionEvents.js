@@ -23,6 +23,12 @@ module.exports = (io) => {
               path: 'especificacion'
             }
           })
+          .populate({
+            path: 'materiales.material',
+            populate: {
+              path: 'especificacion2'
+            }
+          })
           .populate('proveedor')
           .exec()
         io.emit('SERVER:Recepciones', Recepciones)

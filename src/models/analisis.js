@@ -5,6 +5,8 @@ const AnalisisSchema = new Schema({
         type: Map,
         of: String
     }
-});
+},{
+    timestamps:true
+  });
 
 export default model('prueba', AnalisisSchema)

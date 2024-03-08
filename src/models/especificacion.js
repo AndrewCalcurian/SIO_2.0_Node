@@ -76,6 +76,8 @@ let EspecificacionSchema = new Schema([{
         nom: {type:Number},
         max: {type:Number},
       },
-}])
+}],{
+  timestamps:true
+})
 
 module.exports = mongoose.model('especificacion', EspecificacionSchema)

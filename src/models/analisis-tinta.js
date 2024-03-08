@@ -136,6 +136,8 @@ const analisisSchema = new mongoose.Schema({
       fecha:String
     }
   }
+},{
+  timestamps:true
 });
 
 module.exports = mongoose.model('AnalisisTinta', analisisSchema);

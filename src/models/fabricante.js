@@ -28,6 +28,8 @@ let FabricanteSchema = new Schema([{
         ref: 'grupo'
     }],
 
-}])
+}],{
+    timestamps:true
+  })
 
 module.exports = mongoose.model('fabricante', FabricanteSchema)

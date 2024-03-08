@@ -49,11 +49,10 @@ module.exports = (io) => {
     socket.on('CLIENTE:nuevaEspecificacion2', async (data) => {
   try {
     const especificacion = data.especificacion
-    console.log(data)
   const nuevaEspecificacion = new prueba({ especificacion });
     await nuevaEspecificacion.save();
     console.log('Se creó una nueva especificación');
-    const Mat = await Material.findByIdAndUpdate(data.material, { especificacion: nuevaEspecificacion._id });
+    const Mat = await Material.findByIdAndUpdate(data.material, { especificacion2: nuevaEspecificacion._id });
     console.log('Se actualizó el material');
     const materials = await Material.find({ borrado: false }).populate('fabricante').populate('especificacion');
     socket.emit('SERVER:Materiales', materials);

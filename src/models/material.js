@@ -39,8 +39,14 @@ let MaterialSchema = new Schema([{
     especificacion:{
         type:Schema.Types.ObjectId,
         ref: 'especificacion'
+    },
+    especificacion2:{
+        type:Schema.Types.ObjectId,
+        ref: 'prueba'
     }
 
-}])
+}],{
+    timestamps:true
+  })
 
 module.exports = mongoose.model('material', MaterialSchema)

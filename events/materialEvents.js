@@ -12,6 +12,7 @@ module.exports = (io) => {
         const materials = await Material.find({ borrado: false })
                                         .populate('fabricante')
                                         .populate('especificacion')
+                                        .populate('especificacion2')
                                         .populate('grupo');
         io.emit('SERVER:Materiales', materials);
       } catch (error) {
