@@ -8,7 +8,8 @@ import almacenEvents from '../events/almacenEvents';
 import analisisEvents from '../events/analisisEvents';
 import fasesEvents from '../events/fasesEvents';
 import maquinasEvents from '../events/maquinasEvents';
-import clienteEvents from '../events/clienteEvents'
+import clienteEvents from '../events/clienteEvents';
+import categoriaEvents from '../events/categoriaEvents';
 
 export default function configureEvents(io) {
     grupoEvents(io);
@@ -22,4 +23,5 @@ export default function configureEvents(io) {
     fasesEvents(io)
     maquinasEvents(io)
     clienteEvents(io)
+    categoriaEvents(io)
 }

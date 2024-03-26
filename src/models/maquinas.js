@@ -33,6 +33,9 @@ const MaquinaSchema = new Schema({
         type:Number,
         required:true
     },
+    pinzas:{
+        type:Array,
+    },
     colores:{
         type:Number,
     },

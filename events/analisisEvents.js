@@ -22,7 +22,6 @@ module.exports = (io) => {
             const combinedResults = results.reduce((acc, curr) => acc.concat(curr), []);
             // Ordena los resultados combinados por fecha en orden descendente
             combinedResults.sort((a, b) => b.createdAt - a.createdAt);
-            console.log(combinedResults.slice(0, 5))
             io.emit('SERVER:TopFive', combinedResults.slice(0, 5))
           })
           .catch(error => {

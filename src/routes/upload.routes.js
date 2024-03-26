@@ -24,7 +24,7 @@ app.put('/api/upload/:tipo/:id', (req, res)=>{
     }
 
     //validad tipo
-    let tipoValido = ['analisis'];
+    let tipoValido = ['analisis','producto'];
     if( tipoValido.indexOf( tipo ) < 0 ){
         return res.status( 400 ).json({
             ok:false,
@@ -51,8 +51,16 @@ app.put('/api/upload/:tipo/:id', (req, res)=>{
     }
 
     //cambiar nombre de la imagen
-    let nombreArchivo = `${id}-${ new Date().getMilliseconds()}.${extension}`; 
-    console.log(nombreArchivo)
+    let currentDate = new Date();
+    let day = currentDate.getDate();
+    let month = currentDate.getMonth() + 1; // Se suma 1 porque los meses empiezan en 0
+    let year = currentDate.getFullYear();
+    let hours = currentDate.getHours();
+    let minutes = currentDate.getMinutes();
+    let seconds = currentDate.getSeconds();
+    let milliseconds = currentDate.getMilliseconds();
+
+    let nombreArchivo = `${id}_${day}_${month}_${year}_${hours}_${minutes}_${seconds}_${milliseconds}.${extension}`;
 
     archivo.mv(`src/uploads/${tipo}/${nombreArchivo}`, (err)=>{
         if(err){
@@ -67,11 +75,17 @@ app.put('/api/upload/:tipo/:id', (req, res)=>{
             res.json(
                { img:nombreArchivo}
             )
+        }if(tipo === 'producto'){
+            res.json(
+                {img:nombreArchivo}
+            )
         }
 
     });
 
 });
+
+
 
 function AnalisisTintas(id, res, nombreArchivo){
     AnalisisTinta.findById(id,(err,usuarioDB)=>{
