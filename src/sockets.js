@@ -10,6 +10,7 @@ import fasesEvents from '../events/fasesEvents';
 import maquinasEvents from '../events/maquinasEvents';
 import clienteEvents from '../events/clienteEvents';
 import categoriaEvents from '../events/categoriaEvents';
+import defectoEvents from '../events/defectoEvents';
 
 export default function configureEvents(io) {
     grupoEvents(io);
@@ -24,4 +25,5 @@ export default function configureEvents(io) {
     maquinasEvents(io)
     clienteEvents(io)
     categoriaEvents(io)
+    defectoEvents(io)
 }
