@@ -16,6 +16,9 @@ let MaterialSchema = new Schema([{
     color:{
         type:String,
     },
+    rgb:{
+        type:String,
+    },
     fabricante:{
         type:Schema.Types.ObjectId,
         ref: 'fabricante'
