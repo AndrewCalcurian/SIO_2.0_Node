@@ -25,7 +25,8 @@ let ProductoSchema = new Schema([{
             largo: { type: String },
             alto: { type: String },
             tolerancia: { type: String }
-        }
+        },
+        diseno:{type: String}
     },
     materia_prima: {
         sustrato: { type: [{ type: Schema.Types.ObjectId, ref: 'material' }] },
@@ -50,7 +51,7 @@ let ProductoSchema = new Schema([{
         impresoras: { type: [{ type: Schema.Types.ObjectId, ref: 'maquina' }] },
         secuencia: { type: [[String]] },
         pinzas: { type: [[String]] },
-        fuentes: { type: [String] }
+        fuentes: { type: [{ type: Schema.Types.ObjectId, ref: 'material' }] }
     },
     post_impresion: {
         troqueladora: { type: [{ type: Schema.Types.ObjectId, ref: 'maquina' }] },
@@ -64,6 +65,13 @@ let ProductoSchema = new Schema([{
         caja: {
             nombre: { type: String },
             cabida: { type: [String] }
+        },
+        distribucion:{
+            aerea:{ type: String },
+            v3d:{ type: String },
+            peso_cajas:{ type: String },
+            estibas:{ type: String },
+            paletizado:{ type: String }
         }
     }
 }],{

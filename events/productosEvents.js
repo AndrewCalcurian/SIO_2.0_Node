@@ -18,6 +18,10 @@ module.exports = (io) => {
                                                     path: 'materia_prima.tintas.tinta',
                                                     populate: 'fabricante grupo especificacion especificacion2'
                                                 })
+                                                .populate({
+                                                    path: 'impresion.fuentes',
+                                                    populate: 'fabricante grupo especificacion especificacion2'
+                                                })
                                                 .exec()
             io.emit('SERVER:producto', Producto)
         } catch (error) {

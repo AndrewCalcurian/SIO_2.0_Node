@@ -8,6 +8,8 @@ module.exports = (io) => {
       try {
         const Especificaciones = await especificacion.find({ borrado: false }).exec()
         io.emit('SERVER:Especificaciones', Especificaciones)
+        const Prueba = await prueba.find({ borrado: false }).exec()
+        io.emit('SERVER:Especificaciones_', Prueba)
       } catch (error) {
         console.error('Error al buscar especificaciones:', error)
       }
