@@ -13,7 +13,7 @@ let RecepcionSchema = new Schema([{
     },
     OC:{
         type:String,
-        required:[true, 'Debes indicar una orden de compra']
+        default:'DEPRECATED'
     },
     cantidad:[{
         type:String,
@@ -22,6 +22,14 @@ let RecepcionSchema = new Schema([{
     documento:{
         type:String,
         required:[true, 'Debes ingresar un documento']
+    },
+    control:{
+        type:String,
+        required:[true, 'Debes ingresar un numero de control']
+    },
+    precio:{
+        type:String,
+        required:[true, 'Debes ingresar un numero de control']
     },
     fabricacion:[{
         type:String,
@@ -40,6 +48,10 @@ let RecepcionSchema = new Schema([{
             type:Schema.Types.ObjectId,
             ref: 'material'
         },
+        oc:{
+            type:Schema.Types.ObjectId,
+            ref: 'ordenPoligrafica'
+        }
     }]],
     proveedor:{
         type:Schema.Types.ObjectId,

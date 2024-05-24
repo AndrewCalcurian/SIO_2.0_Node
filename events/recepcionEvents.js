@@ -4,6 +4,7 @@ module.exports = (io) => {
     const emitirRecepciones = async () => {
       try {
         const Recepciones = await Recepcion.find({ borrado: false })
+          .populate('materiales.oc')
           .populate('materiales.material')
           .populate({
             path: 'materiales.material',

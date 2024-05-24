@@ -15,6 +15,10 @@ module.exports = (io) => {
                                               populate: {
                                                 path: 'fabricante', // Llena la información del fabricante para cada material
                                                 model: 'fabricante' // Asegúrate de que el modelo se llame 'Fabricante'
+                                              },
+                                              populate: {
+                                                path: 'grupo', // Llena la información del fabricante para cada material
+                                                model: 'grupo' // Asegúrate de que el modelo se llame 'Fabricante'
                                               }
                                             })
             io.emit('SERVER:OrdenesPoligrafica', ordenes);
@@ -38,11 +42,11 @@ socket.on('CLIENTE:NuevaOrdenPoligrafica', async (data) => {
     try {
       const nuevaOrdenGuardada = await nuevaOrden.save();
       console.log('Se registró una nueva orden poligráfica', nuevaOrdenGuardada);
-      socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se registró una nueva orden poligráfica', icon: 'success' });
+      socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se registró una nueva orden de compra', icon: 'success' });
       await EmitirOrdenes();
     } catch (error) {
       console.error('No se pudo registrar la orden poligráfica', error);
-      socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Error en el registro de la orden poligráfica', icon: 'error' });
+      socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Error en el registro de la orden de compra', icon: 'error' });
     }
   });
   
