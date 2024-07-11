@@ -14,6 +14,10 @@ import defectoEvents from '../events/defectoEvents';
 import formulaEvents from '../events/formulaEvents';
 import productoEvents from '../events/productosEvents';
 import opoligraficaEvents from '../events/opoligraficaEvents';
+import ocompraEvents from '../events/ocompraEvents';
+import departamentoEvents from '../events/departamentoEvents';
+import cargoEvents from '../events/cargoEvents';
+import trabajadorEvents from '../events/trabajadorEvents'
 
 export default function configureEvents(io) {
     grupoEvents(io);
@@ -32,4 +36,8 @@ export default function configureEvents(io) {
     formulaEvents(io)
     productoEvents(io)
     opoligraficaEvents(io)
+    ocompraEvents(io)
+    departamentoEvents(io)
+    cargoEvents(io)
+    trabajadorEvents(io)
 }

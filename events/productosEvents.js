@@ -82,22 +82,20 @@ socket.on('CLIENTE:nuevoProducto', async (data) => {
     // Verificar si existe el campo _id en los datos
     if (data._id) {
         try {
-            const existingProducto = await producto.findById(data._id);
+            let existingProducto = await producto.findById(data._id);
             if (existingProducto) {
                 console.log('Producto encontrado en la base de datos:', existingProducto);
-                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Producto encontrado en la base de datos', icon: 'info' });
-
-                // Comparar las diferencias entre data y existingProducto
-                const diferencias = diffObjects(existingProducto, data);
-                console.log('Diferencias encontradas:', diferencias);
-                socket.emit('SERVIDOR:diferencias', diferencias);
+                await producto.findByIdAndUpdate(data._id , data)
+                console.log('Producto actualizado correctamente');
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Producto actualizado correctamente', icon: 'success' });
+                emitirProductos();
             } else {
                 console.log('No se encontró ningún producto con el ID proporcionado');
                 socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'No se encontró ningún producto con el ID proporcionado', icon: 'warning' });
             }
         } catch (err) {
-            console.error('Error al buscar el producto en la base de datos:', err);
-            socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Error al buscar el producto en la base de datos', icon: 'error' });
+            console.error('Error al buscar o actualizar el producto en la base de datos:', err);
+            socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Error al buscar o actualizar el producto en la base de datos', icon: 'error' });
         }
     } else {
         // Verificar si los datos requeridos están completos
