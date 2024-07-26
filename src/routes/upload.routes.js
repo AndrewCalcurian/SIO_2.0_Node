@@ -24,7 +24,7 @@ app.put('/api/upload/:tipo/:id', (req, res)=>{
     }
 
     //validad tipo
-    let tipoValido = ['analisis','producto'];
+    let tipoValido = ['analisis','producto','empleado'];
     if( tipoValido.indexOf( tipo ) < 0 ){
         return res.status( 400 ).json({
             ok:false,
@@ -76,6 +76,10 @@ app.put('/api/upload/:tipo/:id', (req, res)=>{
                { img:nombreArchivo}
             )
         }if(tipo === 'producto'){
+            res.json(
+                {img:nombreArchivo}
+            )
+        }if(tipo === 'empleado'){
             res.json(
                 {img:nombreArchivo}
             )

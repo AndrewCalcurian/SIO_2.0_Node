@@ -29,7 +29,8 @@ let TrabajadorSchema = new Schema([{
     sector: { type: String, },
     domicilio: { type: String, },
     telefono: { type: String, },
-    celular: { type: String, }
+    celular: { type: String, },
+    foto: {type: String, default:'no-image' }
   },
   informacion_adicional: {
     referencias: [{
@@ -69,12 +70,6 @@ let TrabajadorSchema = new Schema([{
   },
   manejo_herramientas: {
     computadora: { type: String, },
-    softwares: {
-      word: { type: Boolean, },
-      excel: { type: Boolean, },
-      power_point: { type: Boolean, },
-      acrobat: { type: Boolean, }
-    },
     otros: [{ type: String }],
     referencias: [{
       empresa: {type:String},
