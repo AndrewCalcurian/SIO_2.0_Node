@@ -28,12 +28,18 @@ module.exports = (io) => {
       try {
         const nuevaEspecificacion = await especificacion.create(data.especificacion);
         console.log('Se creo una nueva especificacion');
+        socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se creó una nueva especifiación', icon: 'success' });
         const Mat = await Material.findByIdAndUpdate(data.material, { especificacion: nuevaEspecificacion._id })
         console.log('Se actualizo el material')
-        const materials = await Material.find({ borrado: false }).populate('fabricante').populate('especificacion');
+        const materials = await Material.find({ borrado: false })
+        .populate('fabricante')
+        .populate('especificacion')
+        .populate('especificacion2')
+        .populate('grupo');
         socket.emit('SERVER:Materiales', materials);
       } catch (err) {
         console.error('Ha ocurrido un error en la creacion de la especificacion', err);
+        socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Ha ocurrido un error en la creacion de la especificación', icon: 'error' });
       }
       await emitirEspecificaciones()
     })
@@ -42,8 +48,11 @@ module.exports = (io) => {
       try {
         await especificacion.findByIdAndUpdate(data._id, data);
         console.log('Se edito la especificacion');
+        socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se ha editado la especificación', icon: 'success' });
+      
       } catch (err) {
         console.error('Ha ocurrido un error en la edicion de la especificacion', err)
+        socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Ha ocurrido un error en la edicion de la especificacion', icon: 'error' });
       }
       await emitirEspecificaciones()
     })
@@ -54,12 +63,17 @@ module.exports = (io) => {
   const nuevaEspecificacion = new prueba({ especificacion });
     await nuevaEspecificacion.save();
     console.log('Se creó una nueva especificación');
+    socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se ha creado la especificación', icon: 'success' });
     const Mat = await Material.findByIdAndUpdate(data.material, { especificacion2: nuevaEspecificacion._id });
     console.log('Se actualizó el material');
-    const materials = await Material.find({ borrado: false }).populate('fabricante').populate('especificacion');
+    const materials = await Material.find({ borrado: false }).populate('fabricante')
+    .populate('especificacion')
+    .populate('especificacion2')
+    .populate('grupo');;
     socket.emit('SERVER:Materiales', materials);
   } catch (err) {
     console.error('Ha ocurrido un error en la creación de la especificación', err);
+        socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Ha ocurrido un error en la creación de la especificacion', icon: 'error' });
   }
   await emitirEspecificaciones();
 });

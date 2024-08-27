@@ -1,4 +1,6 @@
 import Recepcion from '../src/models/recepcion'
+import ComentariosRecepcion from '../src/models/comentarios-recepcion';
+
 module.exports = (io) => {
   io.on('connection', (socket) => {
     const emitirRecepciones = async () => {
@@ -85,6 +87,40 @@ module.exports = (io) => {
       }
       emitirRecepciones();
     })
+
+
+    // *******************************************
+    // COMENTARIOS EN LA RECEPCION
+    // *******************************************
+
+    const EmitirComentarios = async() =>{
+      try{
+        const Comentarios = await ComentariosRecepcion.find({ borrado: false })
+                                                      .exec()
+        io.emit('SERVER:Comentario', Comentarios)
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    socket.on('CLIENTE:Comentario', async () =>{
+      EmitirComentarios();
+    })
+
+    socket.on('CLIENTE:NuevoComentario', async (data) => {
+
+      // Verificar si los datos requeridos están completos
+      const NuevaComentario = new ComentariosRecepcion(data);
+      try {
+        await NuevaComentario.save();
+        // console.log('Se realizó nueva recepción de materiales');
+        // socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se realizó nueva recepción de materiales', icon: 'success' });
+        EmitirComentarios();
+      } catch (err) {
+        console.error('No se pudo guardar comentario:', err);
+        socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error: No se pudo guardar comentario', icon: 'error' });
+      }
+    });
 
   })
 }

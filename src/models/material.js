@@ -22,6 +22,9 @@ let MaterialSchema = new Schema([{
     modelo:{
         type:String,
     },
+    cinta:{
+        type:String,
+    },
     fabricante:{
         type:Schema.Types.ObjectId,
         ref: 'fabricante'

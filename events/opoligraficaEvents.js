@@ -9,18 +9,22 @@ module.exports = (io) => {
         // *******************
         const EmitirOrdenes = async () => {
             try {
-            const ordenes = await ordenPoligrafica.find({ borrado: false })
-                                            .populate('proveedor')
-                                            .populate({path:'pedido.material', model:'material',
-                                              populate: {
-                                                path: 'fabricante', // Llena la información del fabricante para cada material
-                                                model: 'fabricante' // Asegúrate de que el modelo se llame 'Fabricante'
-                                              },
-                                              populate: {
-                                                path: 'grupo', // Llena la información del fabricante para cada material
-                                                model: 'grupo' // Asegúrate de que el modelo se llame 'Fabricante'
-                                              }
-                                            })
+              const ordenes = await ordenPoligrafica.find({ borrado: false })
+                                                    .populate('proveedor')
+                                                    .populate({
+                                                      path: 'pedido.material',
+                                                      model: 'material',
+                                                      populate: [
+                                                        { 
+                                                          path: 'fabricante', 
+                                                          model: 'fabricante' 
+                                                        },
+                                                        { 
+                                                          path: 'grupo', 
+                                                          model: 'grupo' 
+                                                        }
+                                                      ]
+                                                    });
             io.emit('SERVER:OrdenesPoligrafica', ordenes);
             } catch (error) {
             console.error('Ha ocurrido un error al consultar las ordenes:', error);
