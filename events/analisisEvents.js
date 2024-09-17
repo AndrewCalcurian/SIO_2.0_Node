@@ -33,7 +33,6 @@ module.exports = (io) => {
             try{
               const AnalisisTinta_ = await AnalisisTinta.find().exec()
               io.emit('SERVER:AnalisisTinta', AnalisisTinta_)
-              LastFives();
             }catch(err){
                 console.error('Error al buscar analisis:', err)
             }
@@ -63,19 +62,20 @@ module.exports = (io) => {
                     console.log('Error en actualizacion de analisis',err);
                     return
                 }
-            }
-            try {
-              await NuevoAnalisis.save();
-              const reception = await recepcion.findOne({ _id: data.recepcion._id });
-              reception.materiales[data.index].forEach((material) => {
-                material.analisis = NuevoAnalisis._id;
-              });
-              await reception.save();
-              console.log('Se realizó nuevo analisis');
-              socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se realizó nuevo analisis', icon: 'success' });
-            } catch (err) {
-              console.error('Hubo un error en el registro del analisis:', err);
-              socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en el registro del analisis', icon: 'error' });
+            }else{
+              try {
+                await NuevoAnalisis.save();
+                const reception = await recepcion.findOne({ _id: data.recepcion._id });
+                reception.materiales[data.index].forEach((material) => {
+                  material.analisis = NuevoAnalisis._id;
+                });
+                await reception.save();
+                console.log('Se realizó nuevo analisis');
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Se realizó nuevo analisis', icon: 'success' });
+              } catch (err) {
+                console.error('Hubo un error en el registro del analisis:', err);
+                socket.emit('SERVIDOR:enviaMensaje', { mensaje: 'Hubo un error en el registro del analisis', icon: 'error' });
+              }
             }
             EmitirAnalisisTinta();
           });
@@ -133,7 +133,8 @@ module.exports = (io) => {
         // ANALISIS CAJAS
         const EmitirAnalisisCajas= async() => {
           try{
-              const AnalisisCajas_ = await AnalisisCajas.find().exec()
+              const AnalisisCajas_ = await AnalisisCajas.find()
+                                                        .exec()
               io.emit('SERVER:AnalisisCajas', AnalisisCajas_)
           }catch(err){
               console.error('Error al buscar analisis:', err)

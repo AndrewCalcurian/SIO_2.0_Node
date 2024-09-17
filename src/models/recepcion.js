@@ -57,6 +57,9 @@ let RecepcionSchema = new Schema([{
         type:Schema.Types.ObjectId,
         ref: 'proveedor'
     },
+    f_fabricacion:{
+        type:String
+    },
     recepcion:{
         type:String,
         required:[true, 'Debes indicar una recepción']

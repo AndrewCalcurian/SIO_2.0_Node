@@ -25,6 +25,7 @@ const ClienteSchema = new Schema({
         nombre:{type:String, required:true},
         titulo:{type:String, required:true},
         correo:{type:String, required:true},
+        telefono:{type:String, required:true},
         cargo:{type:String, required:true}
     }],
     almacenes:[
